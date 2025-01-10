@@ -1,0 +1,7 @@
+accounts.json
+.venv
+*.png
+__pycache__
+.idea
+__*
+.*
