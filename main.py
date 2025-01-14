@@ -41,7 +41,7 @@ class YouTubeStreamEngager:
 
         except Exception as e:
             print(f"Login process error: {str(e)}")
-            page.screenshot(path=f'login_error_{int(time.time())}.png')
+            page.screenshot(path=f'error_screenshot/login_error_{int(time.time())}.png')
             raise e
 
     def type_humanlike(self, page, selector, text):
@@ -138,7 +138,7 @@ class YouTubeStreamEngager:
 
             except Exception as e:
                 print(f"Error during process: {str(e)}")
-                page.screenshot(path=f'error_{int(time.time())}.png')
+                page.screenshot(path=f'error_screenshot/error_{int(time.time())}.png')
 
             finally:
                 browser.close()
@@ -147,7 +147,7 @@ class YouTubeStreamEngager:
             self.current_account = (self.current_account + 1) % len(self.accounts)
 
             # Random delay
-            delay = random.randint(60, 180)
+            delay = random.randint(3, 8)
             print(f"Waiting {delay} seconds before next action...")
             time.sleep(delay)
 
@@ -246,12 +246,12 @@ class YouTubeStreamEngager:
 
             except TimeoutError as te:
                 print(f"Timeout error: {str(te)}")
-                page.screenshot(path=f'timeout_error_{int(time.time())}.png')
+                page.screenshot(path=f'error_screenshot/timeout_error_{int(time.time())}.png')
                 raise
 
             except Exception as e:
                 print(f"Error during process: {str(e)}")
-                page.screenshot(path=f'error_{int(time.time())}.png')
+                page.screenshot(path=f'error_screenshot/error_{int(time.time())}.png')
                 raise
 
             finally:
@@ -264,7 +264,7 @@ class YouTubeStreamEngager:
                 self.current_account = (self.current_account + 1) % len(self.accounts)
 
                 # Random delay between comments
-                delay = random.randint(60, 180)
+                delay = random.randint(3, 8)
                 print(f"Waiting {delay} seconds before next action...")
                 time.sleep(delay)
 
