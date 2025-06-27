@@ -223,27 +223,31 @@ def load_comments(filename: str) -> List[str]:
         logging.error(f"Error loading comments: {str(e)}")
         return []
 
-
-def main():
-    accounts_file = 'accounts.json'
+def main(ai_comments=None, ai_video_url=None):
+    accounts_file = 'my_accounts.json'
     comments_file = 'comments.txt'
+    if not ai_video_url:
+        video_url = input("Enter the YouTube video URL: ")
+        if not video_url:
+            logging.error("No video URL provided. Exiting...")
+            return
+    else:
+        video_url = ai_video_url
 
-    video_url = input("Enter the YouTube video URL: ")
-    if not video_url:
-        logging.error("No video URL provided. Exiting...")
-        return
+    if not ai_comments:
+        comments = load_comments(comments_file)
+        if not comments:
+            logging.warning("No comments loaded. Using default comments.")
+            comments = [
+                "Great video!",
+                "Thanks for sharing this!",
+                "Very informative content!",
+                "Keep up the great work!"
+            ]
 
-    comments = load_comments(comments_file)
-    if not comments:
-        logging.warning("No comments loaded. Using default comments.")
-        comments = [
-            "Great video!",
-            "Thanks for sharing this!",
-            "Very informative content!",
-            "Keep up the great work!"
-        ]
-
-    random.shuffle(comments)  # Randomize comment order
+        random.shuffle(comments)  # Randomize comment order
+    else:
+        comments = ai_comments
 
     try:
         manager = CommentManager(accounts_file)
@@ -254,6 +258,7 @@ def main():
 
     finally:
         manager.stop_all()
+
 
 
 if __name__ == "__main__":
